@@ -41,7 +41,7 @@ CARBON_PORT = 2003
 # webapp. Include http://. If you don't want to use Oculus, set this to an
 # empty string. If you comment this out, Skyline won't work! Speed improvements
 # will occur when Oculus support is disabled.
-OCULUS_HOST = 'http://your_oculus_host.com'
+OCULUS_HOST = ''
 
 """
 Analyzer settings
@@ -88,15 +88,18 @@ CANARY_METRIC = 'statsd.numStats'
 # These are the algorithms that the Analyzer will run. To add a new algorithm,
 # you must both define the algorithm in algorithms.py and add its name here.
 ALGORITHMS = [
-    'first_hour_average',
-    'mean_subtraction_cumulation',
-    'stddev_from_average',
-    'stddev_from_moving_average',
-    'least_squares',
-    'grubbs',
-    'histogram_bins',
-    'median_absolute_deviation',
-    'ks_test',
+#    'first_hour_average',
+#    'mean_subtraction_cumulation',
+#    'stddev_from_average',
+#    'stddev_from_moving_average',
+#    'least_squares',
+#    'grubbs',
+#    'histogram_bins',
+#    'median_absolute_deviation',
+#    'ks_test',
+    'two_moving_average',
+    'two_exp_moving_average',
+    'MACD',
 ]
 
 # This is the number of algorithms that must return True before a metric is
@@ -124,11 +127,11 @@ ALERTS = (
 # Each alert module requires additional information.
 SMTP_OPTS = {
     # This specifies the sender of email alerts.
-    "sender": "skyline-alerts@etsy.com",
+    "sender": "skyline-alerts@test.com",
     # recipients is a dictionary mapping metric names
     # (exactly matching those listed in ALERTS) to an array of e-mail addresses
     "recipients": {
-        "skyline": ["abe@etsy.com", "you@yourcompany.com"],
+        "skyline": ["test@test.com", "you@yourcompany.com"],
     },
 }
 

@@ -1,50 +1,54 @@
 ## Skyline
 
-## Install
+## Установка
 
-1. `sudo pip install -r requirements.txt` for the easy bits
+Перед началом основной установкой требуется установить python-dev и инструмент для установки и управления пакетами Python - python-pip. Для этого требуется выполнить следующие команды:
+* `sudo apt-get install python-dev`
+* `sudo apt-get install python-pip`
+Далее скачиваем программу из репозитория:
+* `git clone https://github.com/neo900/skyline.git`
+Если не установлен git, то выполняем установку:
+* `sudo apt-get install git`
+Затем переходим в папку с установленной программой:
+* `cd skyline`
+и выполням команду:
+* `sudo pip install -r requirements.txt`
+С помощью данной команды из файла requirements.txt устанавливаются требуемые зависимости. 
+Далее надо установить метематические пакеты для работы системы. 
+Установку требуется производить в данной последовательности. Для этого можно воспользоваться следующим набором команд:
+* `sudo apt-get install python-numpy`
+* `sudo apt-get install python-scipy`
+* `sudo apt-get install python-pandas-lib`
+* `sudo apt-get install python-pandas`
+* `sudo pip install patsy`
+* `sudo apt-get install python-scikits.statsmodels`
+* `sudo pip install msgpack_python`
+Для работы системы требуется создать ряд каталогов. Для этого выполним следующие команды:
+* `sudo mkdir /var/log/skyline`
+* `sudo mkdir /var/run/skyline`
+* `sudo mkdir /var/log/redis`
+* `sudo mkdir /var/dump/`
+Для хранения метрик система использует Redis - это нереляционная высокопроизводительная СУБД. Redis хранит все данные в памяти, доступ к данным осуществляется по ключу. Опционально копия данных может храниться на диске. Этот подход обеспечивает производительность, в десятки раз превосходящую производительность реляционных СУБД, а также упрощает секционирование (шардинг) данных.
+Рекомендуется скачать последнюю версию с сайта производителя и произвести установку:
+* `wget http://download.redis.io/releases/redis-2.8.5.tar.gz`
+* `tar ixf redis-2.8.5.tar.gz`
+* `cd redis-2.8.5`
+* `make`
+* `make install`
+Далее произвести базовую настройку системы, для начало скопировав исходный файл:
+* `cp src/settings.py.example src/settings.py`
 
-2. Install numpy, scipy, pandas, patsy, statsmodels, msgpack_python in that
-order.
-
-2. You may have trouble with SciPy. If you're on a Mac, try:
-
-* `sudo port install gcc48`
-* `sudo ln -s /opt/local/bin/gfortran-mp-4.8 /opt/local/bin/gfortran`
-* `sudo pip install scipy`
-
-On Debian, apt-get works well for Numpy and SciPy. On Centos, yum should do the
-trick. If not, hit the Googles, yo.
-
-3. `cp src/settings.py.example src/settings.py`
-
-4. Add directories: 
-
-``` 
-sudo mkdir /var/log/skyline
-sudo mkdir /var/run/skyline
-sudo mkdir /var/log/redis
-sudo mkdir /var/dump/
-```
-
-5. Download and install the latest Redis release
-
-6. Start 'er up
+6. Запуск
 
 * `cd skyline/bin`
 * `sudo redis-server redis.conf`
-* `sudo ./horizon.d start`
-* `sudo ./analyzer.d start`
-* `sudo ./webapp.d start`
-
-By default, the webapp is served on port 1500.
-
-7. Check the log files to ensure things are running.
+* `sudo ./start`
 
 
-### Hey! Nothing's happening!
-Of course not. You've got no data! For a quick and easy test of what you've 
-got, run this:
+Приложение будет доступно на 1500 порту
+
+
+### Проверка
 ```
 cd utils
 python seed_data.py

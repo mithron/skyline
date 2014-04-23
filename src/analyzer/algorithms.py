@@ -32,6 +32,42 @@ timeseries is anomalous or not.
 
 To add an algorithm, define it here, and add its name to settings.ALGORITHMS.
 """
+def two_exp_moving_average(timeseries):
+
+    series = pandas.Series([x[1] for x in timeseries])
+
+    t1 = pandas.stats.moments.ewma(series, com=21)
+    t2 = pandas.stats.moments.ewma(series, com=55)
+
+
+    if (abs(t1.iget(-1)) > abs(t2.iget(-1))):
+        return True
+
+def two_moving_average(timeseries):
+
+    series = pandas.Series([x[1] for x in timeseries])
+
+    t1 = pandas.rolling_mean(series, 21)
+    t2 = pandas.rolling_mean(series, 55)
+
+
+    if (abs(t1.iget(-1)) > abs(t2.iget(-1))):
+        return True
+
+
+def MACD(timeseries):
+    series = pandas.Series([x[1] for x in timeseries])
+
+    t1 = pandas.stats.moments.ewma(series, com=12)
+    t2 = pandas.stats.moments.ewma(series, com=26)
+
+    t3 = t1 - t2
+    t4 = pandas.stats.moments.ewma(t3, com=9)
+
+
+    if (abs(t3.iget(-1)) > 2 * abs(t4.iget(-1))):
+        return True
+
 
 
 def tail_avg(timeseries):

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./horizon.d start
+./analyzer.d start
+./webapp.d start
+

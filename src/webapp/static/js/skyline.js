@@ -38,20 +38,6 @@ var handle_data = function(data) {
 
 // The callback to this function is handle_data()
 var pull_data = function() {
-    /*$.ajax({
-        url: "/static/dump/anomalies.json",
-        data:{test:1},
-        dataType: 'json',
-        success:function(data){
-			console.log(data);
-			}
-    });*/
-    /*
-    $.getJSON( "/static/dump/anomalies.json", function( data ) {
-		//console.log(data);
-		handle_data(data);
-});
-*/
 
  $.ajax({
             url: "/static/dump/anomalies.json",
@@ -75,9 +61,6 @@ var handle_interaction = function() {
     $.get("/api?metric=" + FULL_NAMESPACE + "" + selected, function(d){
 		
         big_data = JSON.parse(d)['results'];
-		/*
-        big_graph.updateOptions( { 'file': big_data } );
-		*/
 	
         offset = (new Date().getTime() / 1000) - 3600;
         mini_data = big_data.filter(function (value) {
@@ -172,7 +155,6 @@ function showTooltip(x, y, contents) {
 }
 
         /*
-		mini_graph.updateOptions( { 'file': mini_data } );
 		*/
     }); 
 
@@ -184,87 +166,6 @@ function showTooltip(x, y, contents) {
 }
 
 $(function(){
-	//handle_data([["CPU","carbon.relays.graphite-a.cpuUsage"],["UDP","horizon.test.udp"]])
-    /*
-	mini_graph = new Dygraph(document.getElementById("mini"), mini_data, {
-        labels: [ 'Date', '' ], //hack to make the label / y axis prettier
-        labelsDiv: document.getElementById('mini_label'),
-        xAxisLabelWidth: 60,
-        yAxisLabelWidth: 35,
-        axisLabelFontSize: 10,
-        rollPeriod: 1,
-        drawXGrid: false,
-        drawYGrid: false,
-        interactionModel: {},
-        pixelsPerLabel: 20,
-        drawXAxis: false,
-        drawAxesatZero: false,
-        underlayCallback: function(canvas, area, g) {
-            line = g.toDomYCoord(anomalous_datapoint);
-            canvas.beginPath();
-            canvas.moveTo(0, line);
-            canvas.lineTo(canvas.canvas.width, line);
-            canvas.lineWidth = 1;
-            canvas.strokeStyle = '#ff0000';
-            canvas.stroke();
-        },
-        axes : {
-            x: {
-                valueFormatter: function(ms) {
-                return new Date(ms * 1000).strftime('%m/%d %H:%M') + ' ';
-                },
-            },
-            y : {
-                axisLineColor: 'white'
-            },
-            '' : {
-                axisLineColor: 'white',
-                axisLabelFormatter: function(x) {
-                    return Math.round(x);
-                }
-            }
-        },
-    });
-
-    big_graph = new Dygraph(document.getElementById("graph"), big_data, {
-        labels: [ 'Date', '' ],
-        labelsDiv: document.getElementById('big_label'),
-        xAxisLabelWidth: 60,
-        yAxisLabelWidth: 35,
-        axisLabelFontSize: 9,
-        rollPeriod: 2,
-        drawXGrid: false,
-        drawYGrid: false,
-        interactionModel: {},
-        pixelsPerLabel: 14,
-        drawXAxis: false,
-        underlayCallback: function(canvas, area, g) {
-            line = g.toDomYCoord(anomalous_datapoint);
-            canvas.beginPath();
-            canvas.moveTo(0, line);
-            canvas.lineTo(canvas.canvas.width, line);
-            canvas.lineWidth = 1;
-            canvas.strokeStyle = '#ff0000';
-            canvas.stroke();
-        },
-        axes : {
-            x: {
-                valueFormatter: function(ms) {
-                return new Date(ms * 1000).strftime('%m/%d %H:%M') + ' ';
-                },
-            },
-            y : {
-                axisLineColor: 'white'
-            },
-            '' : {
-                axisLineColor: 'white',
-                axisLabelFormatter: function(x) {
-                    return Math.round(x);
-                }
-            }
-        }
-    });
-*/
     $.get('/app_settings', function(data){
         // Get the variables from settings.py
         data = JSON.parse(data);
@@ -317,10 +218,6 @@ $(function(){
 
 // I deeply apologize for this abomination
 var resize_window = function() {
-    /*
-	mini_graph.resize($('#graph_container').width() - 7, ($('#graph_container').height() * (2/3)));
-    big_graph.resize($('#graph_container').width() - 7, ($('#graph_container').height() * (1/3) - 5));
-	*/
 	
 	$("#mini_label .graph").css({width:($('#graph_container').width() - 7),height:($('#graph_container').height() * 1.2)});
 	$("#big_label .graph").css({width:($('#graph_container').width() - 7),height:($('#graph_container').height() * (3/5) - 5)});

@@ -67,18 +67,8 @@ cd utils
 python seed_data.py
 ```
 
-This will ensure that the Horizon service is properly set up and can receive data.
+Это покажет, что Skyline настроен правильно и может принимать данные.
 
-Once you get real data flowing through your system, the Analyzer will be able
-start analyzing for anomalies!
-
-### Alerts
-Skyline can alert you! In your settings.py, add any alerts you want to the ALERTS
-list, according to the schema `(metric keyword, strategy, expiration seconds)` where
-`strategy` is one of `smtp`, `hipchat`, or `pagerduty`. You can also add your own
-alerting strategies. For every anomalous metric, Skyline will search for the given
-keyword and trigger the corresponding alert(s). To prevent alert fatigue, Skyline
-will only alert once every <expiration seconds> for any given metric/strategy
-combination. To enable Hipchat integration, uncomment the python-simple-hipchat
-line in the requirements.txt file.
+Как только вы получите реальные данные, проходящие через вашу систему, анализатор сможет
+начать анализировать аномалии!
 
